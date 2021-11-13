@@ -1,0 +1,29 @@
+name: project
+description: A new Flutter project.
+
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+    # svgファイルを追加したい
+  flutter_svg: ^0.19.3
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+  # 背景素材置き場 
+  - movies/
+  # svg素材置き場
+  - assets/
