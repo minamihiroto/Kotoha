@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project/comment.dart';
+import 'package:project/change.dart';
+import 'package:project/bookmark.dart';
+import 'package:project/setting.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
       home: MyHomePage(),
     );
   }
@@ -19,7 +22,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -30,17 +32,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('movies/background-sample.jpg'),
-          fit: BoxFit.cover,
-        )),
+          image: DecorationImage(
+            image: AssetImage('movies/background-sample.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Container(
             width: 310,
             margin: EdgeInsets.only(top: 110),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+              children: [
                 Container(
                   //テキストコンテンツ、引用文周り
                   child: Column(
@@ -104,12 +107,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.bottomCenter,
                   child: Column(
                     children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/comment.svg',
-                        color: Color(0xffffffff),
-                        semanticsLabel: 'comment',
-                        width: 50,
-                        height: 50,
+                      GestureDetector(
+                        onTap: () {
+                          // 画面遷移
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) =>
+                                  Comment(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          child: SvgPicture.asset(
+                            'assets/comment.svg',
+                            color: Color(0xffffffff),
+                            semanticsLabel: 'comment',
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 40),
@@ -122,26 +139,65 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            SvgPicture.asset(
-                              'assets/change.svg',
-                              color: Color(0xffffffff),
-                              semanticsLabel: 'comment',
-                              width: 30,
-                              height: 30,
+                            GestureDetector(
+                              onTap: () {
+                                // 画面遷移
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder:
+                                        (BuildContext context, _, __) =>
+                                            Change(),
+                                  ),
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                'assets/change.svg',
+                                color: Color(0xffffffff),
+                                semanticsLabel: 'comment',
+                                width: 30,
+                                height: 30,
+                              ),
                             ),
-                            SvgPicture.asset(
-                              'assets/book.svg',
-                              color: Color(0xffffffff),
-                              semanticsLabel: 'comment',
-                              width: 30,
-                              height: 30,
+                            GestureDetector(
+                              onTap: () {
+                                // 画面遷移
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder:
+                                        (BuildContext context, _, __) =>
+                                            Bookmark(),
+                                  ),
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                'assets/book.svg',
+                                color: Color(0xffffffff),
+                                semanticsLabel: 'comment',
+                                width: 30,
+                                height: 30,
+                              ),
                             ),
-                            SvgPicture.asset(
-                              'assets/setting.svg',
-                              color: Color(0xffffffff),
-                              semanticsLabel: 'comment',
-                              width: 30,
-                              height: 30,
+                            GestureDetector(
+                              onTap: () {
+                                // 画面遷移
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder:
+                                        (BuildContext context, _, __) =>
+                                            Setting(),
+                                  ),
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                'assets/setting.svg',
+                                color: Color(0xffffffff),
+                                semanticsLabel: 'comment',
+                                width: 30,
+                                height: 30,
+                              ),
                             ),
                           ],
                         ),
