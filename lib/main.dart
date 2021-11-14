@@ -1,14 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project/comment.dart';
 import 'package:project/change.dart';
 import 'package:project/bookmark.dart';
 import 'package:project/setting.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(
-    MyApp(),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -27,6 +29,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String text = 'エラー';
+  String citation = 'エラー';
+
+    Future<void> wiseSaying() async {
+    final snapshot =
+        await FirebaseFirestore.instance.collection('saying').get();
+    final text = snapshot.docs.first.data()['text'];
+    final citation = snapshot.docs.first.data()['citation'];
+    return [text,citation];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // wiseSaying().then(
+    //   (String value) => text = value,
+    //   (String value) => citation = value,
+    // );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,26 +92,28 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Text(
-                          '会社には2種類ある。\n高く売るために努力する会社と、安く売るために努力する会社だ。我々は後者になる。',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            height: 2.75,
-                          ),
-                          textAlign: TextAlign.center,
-                          textHeightBehavior: TextHeightBehavior(
-                            applyHeightToFirstAscent: false,
-                            applyHeightToLastDescent: false,
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 20),
+                          child: Text(
+                            text,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              height: 2.75,
+                            ),
+                            textAlign: TextAlign.center,
+                            textHeightBehavior: TextHeightBehavior(
+                              applyHeightToFirstAscent: false,
+                              applyHeightToLastDescent: false,
+                            ),
                           ),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 30),
                         child: Text(
-                          'ビジネス | ジェフ・ベゾス',
+                          citation,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white70,

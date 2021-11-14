@@ -10,8 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    # svgファイルを追加したい
+    # svgファイルを追加したい(nullsafetyじゃない)
   flutter_svg: ^0.19.3
+    # firebase連携(nullsafetyじゃない)
+  firebase_core: "0.7.0"
+  cloud_firestore: "^0.16.0"
 
   cupertino_icons: ^1.0.2
 
