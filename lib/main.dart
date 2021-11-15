@@ -43,6 +43,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return docs.first.data();
   }
 
+  Future<void> mainLoop() async {
+    // 10秒ごとに実行
+    while (true) {
+      await Future<void>.delayed(
+        const Duration(seconds: 10),
+      );
+      wiseSaying().then(
+        (Map<String, dynamic> value) {
+          text = value['text'];
+          citation = value['citation'];
+          setState(() {});
+        },
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {});
       },
     );
+    mainLoop();
   }
 
   @override
