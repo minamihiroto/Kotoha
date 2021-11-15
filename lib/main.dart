@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: MyHomePage(),
     );
   }
@@ -32,12 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   String text = 'エラー';
   String citation = 'エラー';
 
-    Future<void> wiseSaying() async {
+  Future<void> wiseSaying() async {
     final snapshot =
         await FirebaseFirestore.instance.collection('saying').get();
     final text = snapshot.docs.first.data()['text'];
     final citation = snapshot.docs.first.data()['citation'];
-    return [text,citation];
+    return [text, citation];
   }
 
   @override
@@ -97,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           margin: EdgeInsets.only(top: 20),
                           child: Text(
                             text,
+                            maxLines: 8,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,

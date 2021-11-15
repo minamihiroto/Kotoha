@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
 
 class Comment extends StatelessWidget {
   @override
@@ -8,45 +7,43 @@ class Comment extends StatelessWidget {
     return Scaffold(
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
+      appBar: AppBar(
+        title: const Text("投稿"),
+        backgroundColor: Colors.blue.withOpacity(0),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // 投稿処理を書く（空欄の場合発火しない）
+            },
+            child: Text(
+              '完了',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
+          margin: EdgeInsets.only(right: 30, left: 30),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 60, left: 30,),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop(
-                          PageRouteBuilder(
-                            opaque: false,
-                            pageBuilder: (BuildContext context, _, __) =>
-                                MyApp(),
-                          ),
-                        );
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 60, right: 30,),
-                    child: GestureDetector(
-                      child: Text(
-                        '完了',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                      ),
-                    ),
-                  ),
-                ],
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: '入力してください（140字以内）',
+                  hintStyle: TextStyle(fontSize: 20, color: Colors.white30),
+                ),
+                textAlign: TextAlign.center,
+                maxLines:8,
+                maxLength: 140,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),
