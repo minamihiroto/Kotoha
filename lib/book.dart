@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/sound.dart';
-import 'package:project/movie.dart';
+import 'package:project/bookmark.dart';
+import 'package:project/history.dart';
 
 class TabInfo {
   String label;
@@ -9,12 +9,12 @@ class TabInfo {
   TabInfo(this.label, this.widget);
 }
 
-class Change extends StatefulWidget {
+class Book extends StatefulWidget {
   @override
-  _ChangeState createState() => _ChangeState();
+  _BookState createState() => _BookState();
 }
 
-class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
+class _BookState extends State<Book> with SingleTickerProviderStateMixin {
   TabController _tabController;
 
   @override
@@ -32,11 +32,9 @@ class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ボカシにしたい（ブラー？？）
-      backgroundColor: Colors.black.withOpacity(0.85),
       appBar: AppBar(
         title: const Text(
-          "環境変更",
+          "マイブック",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blue.withOpacity(0),
@@ -49,6 +47,8 @@ class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
           indicatorColor: Colors.white,
         ),
       ),
+      // ボカシにしたい（ブラー？？）
+      backgroundColor: Colors.black.withOpacity(0.85),
       body: TabBarView(
         controller: _tabController,
         children: _buildTabPages(),
@@ -58,16 +58,16 @@ class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
 
   List<Widget> _buildTabs([BuildContext context]) {
     return [
-      Tab(text: 'サウンド'),
-      Tab(text: '背景動画'),
+      Tab(text: '履歴'),
+      Tab(text: 'ブックマーク'),
     ];
   }
 
   /// タブの中身として表示するPage(Widget)の配列を生成
   List<Widget> _buildTabPages() {
     return [
-      Sound(),
-      Movie(),
+      History(),
+      Bookmark(),
     ];
   }
 }

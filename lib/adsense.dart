@@ -6,7 +6,7 @@ class Adsense extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("広告が表示される理由"),
+        title: const Text("広告が表示される理由",style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Colors.blue.withOpacity(0),
       ),
       // ボカシにしたい（ブラー？？）

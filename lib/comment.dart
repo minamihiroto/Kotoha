@@ -55,7 +55,10 @@ class CommentState extends State<Comment> {
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
       appBar: AppBar(
-        title: const Text("投稿"),
+        title: const Text(
+          "投稿",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         backgroundColor: Colors.blue.withOpacity(0),
         actions: [
           TextButton(
@@ -77,6 +80,7 @@ class CommentState extends State<Comment> {
           margin: EdgeInsets.only(right: 30, left: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextField(
                 autofocus: true,
@@ -93,11 +97,12 @@ class CommentState extends State<Comment> {
                   fontSize: 20,
                 ),
               ),
-              TextField(
+              TextFormField(
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: '引用元（30字以内）',
                   hintStyle: TextStyle(color: Colors.white54),
+                  counterText: '',
                 ),
                 maxLines: 1,
                 maxLength: 30,
@@ -106,21 +111,24 @@ class CommentState extends State<Comment> {
                   fontSize: 16,
                 ),
               ),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  canvasColor: Colors.black87,
-                ),
-                child: DropdownButton(
-                  style: TextStyle(color: Colors.white),
-                  items: _items,
-                  value: _selectItem,
-                  onChanged: (value) => {
-                    setState(() {
-                      _selectItem = value;
-                    }),
-                  },
+              SizedBox(
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    canvasColor: Colors.black87,
+                  ),
+                  child: DropdownButton(
+                    style: TextStyle(color: Colors.white),
+                    items: _items,
+                    value: _selectItem,
+                    onChanged: (value) => {
+                      setState(() {
+                        _selectItem = value;
+                      }),
+                    },
+                  ),
                 ),
               ),
+              // height: 30,
             ],
           ),
         ),

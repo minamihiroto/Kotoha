@@ -6,7 +6,7 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("表示投稿の絞り込み"),
+        title: const Text("表示投稿の絞り込み",style: TextStyle(fontWeight: FontWeight.bold),),
         backgroundColor: Colors.blue.withOpacity(0),
       ),
       // ボカシにしたい（ブラー？？）

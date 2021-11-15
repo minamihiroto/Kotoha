@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project/comment.dart';
 import 'package:project/change.dart';
-import 'package:project/bookmark.dart';
+import 'package:project/book.dart';
 import 'package:project/setting.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -35,21 +35,24 @@ class _MyHomePageState extends State<MyHomePage> {
   String text = 'エラー';
   String citation = 'エラー';
 
-  Future<void> wiseSaying() async {
+  Future<Map<String, dynamic>> wiseSaying() async {
     final snapshot =
         await FirebaseFirestore.instance.collection('saying').get();
-    final text = snapshot.docs.first.data()['text'];
-    final citation = snapshot.docs.first.data()['citation'];
-    return [text, citation];
+    final docs = snapshot.docs;
+    docs.shuffle();
+    return docs.first.data();
   }
 
   @override
   void initState() {
     super.initState();
-    // wiseSaying().then(
-    //   (String value) => text = value,
-    //   (String value) => citation = value,
-    // );
+    wiseSaying().then(
+      (Map<String, dynamic> value) {
+        text = value['text'];
+        citation = value['citation'];
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -99,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Container(
                           margin: EdgeInsets.only(top: 20),
                           child: Text(
-                            text,
+                            text.replaceAll('\\n', '\n'),
                             maxLines: 8,
                             style: TextStyle(
                               fontSize: 20,
@@ -194,8 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   PageRouteBuilder(
                                     opaque: false,
                                     pageBuilder:
-                                        (BuildContext context, _, __) =>
-                                            Bookmark(),
+                                        (BuildContext context, _, __) => Book(),
                                   ),
                                 );
                               },
