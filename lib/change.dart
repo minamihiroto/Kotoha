@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
 
 class Change extends StatelessWidget {
   @override
@@ -9,6 +8,7 @@ class Change extends StatelessWidget {
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
       appBar: AppBar(
+        title: const Text("環境変更"),
         backgroundColor: Colors.blue.withOpacity(0),
       ),
       body: Center(

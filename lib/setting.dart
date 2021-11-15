@@ -21,7 +21,8 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 30,
-                    left: 50,
+                    left: 40,
+                    bottom: 10,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -41,10 +42,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -64,10 +67,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -87,10 +92,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -110,10 +117,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -133,10 +142,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -156,10 +167,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -179,10 +192,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -202,10 +217,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -225,10 +242,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -248,10 +267,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -271,10 +292,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 10,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -294,10 +317,12 @@ class Setting extends StatelessWidget {
                     ),
                   ),
                 ),
+                Divider(color: Colors.white54),
                 Container(
                   margin: EdgeInsets.only(
-                    top: 30,
-                    left: 50,
+                    top: 10,
+                    bottom: 50,
+                    left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
