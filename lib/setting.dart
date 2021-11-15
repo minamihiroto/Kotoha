@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/main.dart';
+import 'package:project/adsense.dart';
+import 'package:project/premium.dart';
+import 'package:project/search.dart';
+import 'package:project/news.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class Setting extends StatelessWidget {
   @override
@@ -21,24 +26,37 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 30,
+                    right: 10,
                     left: 40,
                     bottom: 10,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
+                      // 画面遷移
+                      Navigator.of(context).push(
                         PageRouteBuilder(
                           opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
+                          pageBuilder: (BuildContext context, _, __) =>
+                              Adsense(),
                         ),
                       );
                     },
-                    child: Text(
-                      '広告が表示される理由',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '広告が表示される理由',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -46,24 +64,37 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
+                      // 画面遷移
+                      Navigator.of(context).push(
                         PageRouteBuilder(
                           opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
+                          pageBuilder: (BuildContext context, _, __) =>
+                              Premium(),
                         ),
                       );
                     },
-                    child: Text(
-                      'プレミアムプランに変更する',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'プレミアムプランに変更する',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -71,24 +102,37 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
+                      // 画面遷移
+                      Navigator.of(context).push(
                         PageRouteBuilder(
                           opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
+                          pageBuilder: (BuildContext context, _, __) =>
+                              Search(),
                         ),
                       );
                     },
-                    child: Text(
-                      '表示投稿の絞り込み',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '表示投稿の絞り込み',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -96,24 +140,35 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
+                      Navigator.of(context).push(
                         PageRouteBuilder(
                           opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
+                          pageBuilder: (BuildContext context, _, __) => News(),
                         ),
                       );
                     },
-                    child: Text(
-                      '今までの投稿の一括削除',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'お知らせ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -121,24 +176,54 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                      showDialog(
+                          context: context,
+                          builder: (_) => CupertinoAlertDialog(
+                                title: Text("一括削除"),
+                                content: Text(
+                                  "今まで投稿されたものは\n二度と復元することはできません。\nもし削除されるにしてもその前に\n別の場所に保存しておいてください。\nそれは過去のあなたの\n支えになったはずの言葉だから。",
+                                  style: TextStyle(
+                                    height: 1.5,
+                                  ),
+                                ),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    child: Text('キャンセル'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: Text('一括削除'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              ));
                     },
-                    child: Text(
-                      'お問い合わせ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '今までの投稿の一括削除',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -146,24 +231,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('mailto:yolo_by.hiroto@icloud.com')) {
+                        await launch('mailto:yolo_by.hiroto@icloud.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      'お知らせ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'お問い合わせ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -171,24 +266,30 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                      Share.share('共有');
                     },
-                    child: Text(
-                      'アプリのシェア',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'アプリのシェア',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -196,24 +297,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      'レビューする',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'レビューする',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -221,24 +332,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      '公式Twitter',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '公式Twitter',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -246,24 +367,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      '公式Instagram',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '公式Instagram',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -271,24 +402,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      '利用規約',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '利用規約',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -296,24 +437,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 10,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      'プライバシーポリシー',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'プライバシーポリシー',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -321,24 +472,34 @@ class Setting extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(
                     top: 10,
+                    right: 10,
                     bottom: 50,
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => MyApp(),
-                        ),
-                      );
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
                     },
-                    child: Text(
-                      '開発にあたり、お世話になった方達',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white70,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'お世話になった方々',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
                     ),
                   ),
                 ),
