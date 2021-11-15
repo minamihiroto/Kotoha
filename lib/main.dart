@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String text = 'エラー';
   String citation = 'エラー';
+  String genre = 'エラー';
 
   Future<Map<String, dynamic>> wiseSaying() async {
     final snapshot =
@@ -53,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
         (Map<String, dynamic> value) {
           text = value['text'];
           citation = value['citation'];
+          genre = value['genre'];
           setState(() {});
         },
       );
@@ -66,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
       (Map<String, dynamic> value) {
         text = value['text'];
         citation = value['citation'];
+        genre = value['genre'];
         setState(() {});
       },
     );
@@ -137,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         margin: EdgeInsets.only(top: 30),
                         child: Text(
-                          citation,
+                          '$genre | $citation',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white70,
