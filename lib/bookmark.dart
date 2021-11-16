@@ -22,9 +22,9 @@ class Bookmark extends StatelessWidget {
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.white,
-                    height: 2.75,
+                    height: 2.25,
                   ),
                   textAlign: TextAlign.center,
                   textHeightBehavior: TextHeightBehavior(

@@ -82,11 +82,12 @@ class CommentState extends State<Comment> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextField(
+              TextFormField(
                 autofocus: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: '入力してください（140字以内）',
+                  counterText: '',
                   hintStyle: TextStyle(fontSize: 20, color: Colors.white54),
                 ),
                 textAlign: TextAlign.center,
@@ -128,7 +129,6 @@ class CommentState extends State<Comment> {
                   ),
                 ),
               ),
-              // height: 30,
             ],
           ),
         ),
