@@ -59,7 +59,8 @@ class CommentState extends State<Comment> {
           "投稿",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.withOpacity(0),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         actions: [
           TextButton(
             onPressed: () {

@@ -6,8 +6,12 @@ class Premium extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("プレミアムプランに変更する",style: TextStyle(fontWeight: FontWeight.bold),),
-        backgroundColor: Colors.blue.withOpacity(0),
+        title: const Text(
+          "プレミアムプランに変更する",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),

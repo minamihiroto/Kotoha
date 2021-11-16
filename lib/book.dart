@@ -37,7 +37,8 @@ class _BookState extends State<Book> with SingleTickerProviderStateMixin {
           "マイブック",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.withOpacity(0),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         bottom: TabBar(
           labelStyle: TextStyle(fontSize: 18),
           indicatorSize: TabBarIndicatorSize.tab,

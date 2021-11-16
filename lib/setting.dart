@@ -18,7 +18,8 @@ class Setting extends StatelessWidget {
           "設定",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.withOpacity(0),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: Center(
         child: Container(

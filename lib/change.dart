@@ -39,7 +39,8 @@ class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
           "環境変更",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.blue.withOpacity(0),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
         bottom: TabBar(
           labelStyle: TextStyle(fontSize: 18),
           indicatorSize: TabBarIndicatorSize.tab,

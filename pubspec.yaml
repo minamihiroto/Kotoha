@@ -32,5 +32,6 @@ flutter:
   assets:
   # 背景素材置き場 
   - movies/
+  - images/
   # svg素材置き場
   - assets/

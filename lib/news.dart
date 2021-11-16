@@ -7,8 +7,8 @@ class News extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("お知らせ",style: TextStyle(fontWeight: FontWeight.bold),),
-        backgroundColor: Colors.blue.withOpacity(0),
-      ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,      ),
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
       body: Center(
