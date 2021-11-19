@@ -78,7 +78,11 @@ class CommentState extends State<Comment> {
       ),
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(right: 30, left: 30),
+          margin: EdgeInsets.only(
+            right: 30,
+            left: 30,
+            top: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,

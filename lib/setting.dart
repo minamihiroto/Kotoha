@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:project/adsense.dart';
 import 'package:project/premium.dart';
 import 'package:project/search.dart';
-import 'package:project/news.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
 
@@ -150,42 +149,6 @@ class Setting extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) => News(),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'お知らせ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
-                          ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Divider(color: Colors.white54),
-                Container(
-                  margin: EdgeInsets.only(
-                    top: 10,
-                    right: 10,
-                    bottom: 10,
-                    left: 40,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
                       showDialog(
                           context: context,
                           builder: (_) => CupertinoAlertDialog(
@@ -217,6 +180,41 @@ class Setting extends StatelessWidget {
                       children: [
                         Text(
                           '今までの投稿の一括削除',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        Icon(
+                          Icons.chevron_right_outlined,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Divider(color: Colors.white54),
+                Container(
+                  margin: EdgeInsets.only(
+                    top: 10,
+                    right: 10,
+                    bottom: 10,
+                    left: 40,
+                  ),
+                  child: GestureDetector(
+                    onTap: () async {
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
+                      } else {
+                        throw 'エラー：開くことができませんでした';
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'お知らせ',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white70,
@@ -477,7 +475,7 @@ class Setting extends StatelessWidget {
                   margin: EdgeInsets.only(
                     top: 10,
                     right: 10,
-                    bottom: 50,
+                    bottom: 30,
                     left: 40,
                   ),
                   child: GestureDetector(
@@ -504,6 +502,20 @@ class Setting extends StatelessWidget {
                           size: 30,
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                    bottom: 50,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'v0.0.1',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
                     ),
                   ),
                 ),
