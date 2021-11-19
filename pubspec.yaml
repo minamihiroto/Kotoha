@@ -19,6 +19,8 @@ dependencies:
   url_launcher: ^5.7.10
   # アプリ共有するために追加
   share: ^0.6.5+4
+  # ローカルデータを保存するために追加
+  device_info: ^1.0.0
   
   cupertino_icons: ^1.0.2
 

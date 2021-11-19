@@ -34,7 +34,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String text = 'エラー';
   String citation = 'エラー';
-  String genre = 'エラー';
+  int genre;
+  String genreMessage = 'エラー';
 
   Future<Map<String, dynamic>> wiseSaying() async {
     final snapshot =
@@ -42,6 +43,17 @@ class _MyHomePageState extends State<MyHomePage> {
     final docs = snapshot.docs;
     docs.shuffle();
     return docs.first.data();
+  }
+
+  switchBun() {
+    switch (genre) {
+      case 2:
+        return genreMessage = 'ビジネス';
+      case 3:
+        return genreMessage = '歌詞';
+      case 4:
+        return genreMessage = '励まし';
+    }
   }
 
   Future<void> mainLoop() async {
@@ -55,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
           text = value['text'];
           citation = value['citation'];
           genre = value['genre'];
+          switchBun();
           setState(() {});
         },
       );
@@ -69,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
         text = value['text'];
         citation = value['citation'];
         genre = value['genre'];
+        switchBun();
         setState(() {});
       },
     );
@@ -140,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Container(
                         margin: EdgeInsets.only(top: 30),
                         child: Text(
-                          '$genre | $citation',
+                          '$genreMessage | $citation',
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.white70,

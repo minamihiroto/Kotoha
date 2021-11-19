@@ -8,32 +8,6 @@ class Bookmark extends StatefulWidget {
 }
 
 class _BookmarkState extends State<Bookmark> {
-  Future<Map<String, dynamic>> myBook() async {
-    final snapshot = await FirebaseFirestore.instance.collection('users').get();
-    final document = snapshot.docs.first.data();
-    return document;
-  }
-
-  List<Map<String, dynamic>> mapBookmark = [];
-
-  @override
-  void initState() {
-    super.initState();
-    myBook().then(
-      (Map<String, dynamic> value) async {
-        final bookmarkList = value['bookmark'] as List;
-        mapBookmark = await Future.wait(
-          bookmarkList.map(
-            (e) async {
-              final doc = await (e as DocumentReference).get();
-              return doc.data();
-            },
-          ).toList(),
-        );
-        setState(() {});
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +20,6 @@ class _BookmarkState extends State<Bookmark> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: mapBookmark.map((document) {
-              return ListTile(
-                title: Text('${document['text']}'),
-                subtitle: Text('${document['genre']}'),
-                leading: Text('${document['citation']}'),
-              );
-            }).toList(),
             // children: [
             //   Container(
             //     margin:

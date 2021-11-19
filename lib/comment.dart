@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:device_info/device_info.dart';
 
 class Comment extends StatefulWidget {
   @override
@@ -7,8 +9,10 @@ class Comment extends StatefulWidget {
 }
 
 class CommentState extends State<Comment> {
-  List<DropdownMenuItem<int>> _items = List();
+  List<DropdownMenuItem<int>> _items = [];
   int _selectItem = 0;
+  String messageText = '';
+  String citation = '';
 
   @override
   void initState() {
@@ -21,7 +25,7 @@ class CommentState extends State<Comment> {
     _items
       ..add(DropdownMenuItem(
         child: Text(
-          'ジャンル選択',
+          'ジャンル選択(必須)',
           style: TextStyle(fontSize: 16, color: Colors.white54),
         ),
         value: 1,
@@ -52,30 +56,7 @@ class CommentState extends State<Comment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
-      appBar: AppBar(
-        title: const Text(
-          "投稿",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        actions: [
-          TextButton(
-            onPressed: () {
-              // 投稿処理を書く（空欄の場合発火しない）
-            },
-            child: Text(
-              '完了',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-          ),
-        ],
-      ),
       body: Center(
         child: Container(
           margin: EdgeInsets.only(
@@ -96,12 +77,20 @@ class CommentState extends State<Comment> {
                   hintStyle: TextStyle(fontSize: 20, color: Colors.white54),
                 ),
                 textAlign: TextAlign.center,
+                keyboardType: TextInputType.multiline,
                 maxLines: 8,
                 maxLength: 140,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),
+                onChanged: (String value) {
+                  setState(
+                    () {
+                      messageText = value;
+                    },
+                  );
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -116,6 +105,13 @@ class CommentState extends State<Comment> {
                   color: Colors.white,
                   fontSize: 16,
                 ),
+                onChanged: (String value) {
+                  setState(
+                    () {
+                      citation = value;
+                    },
+                  );
+                },
               ),
               SizedBox(
                 child: Theme(
@@ -137,6 +133,54 @@ class CommentState extends State<Comment> {
             ],
           ),
         ),
+      ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          TextButton(
+            onPressed: () async {
+              if (messageText != '' && citation != '' && _selectItem != 1) {
+                await FirebaseFirestore.instance.collection('saying').doc().set(
+                  {
+                    'text': messageText,
+                    'citation': citation,
+                    'genre': _selectItem,
+                    'bookmark': 0,
+                  },
+                );
+                Navigator.of(context).pop();
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (_) => CupertinoAlertDialog(
+                          title: Text("本文、引用元、ジャンル選択は\n必須です"),
+                          content: Text(
+                            "引用元がご自身の場合はハンドルネーム\nまたは匿名と記載、不明の場合は不明\nと記載してください",
+                            style: TextStyle(
+                              height: 1.5,
+                            ),
+                          ),
+                          actions: [
+                            CupertinoDialogAction(
+                              child: Text('閉じる'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ));
+              }
+            },
+            child: Text(
+              '投稿',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
