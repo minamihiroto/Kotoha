@@ -41,12 +41,15 @@ class _MyHomePageState extends State<MyHomePage> {
   int genre;
   String genreMessage = 'エラー';
   int bookmark;
+  String id;
+  List<String> listBookmark = [];
 
   Future<Map<String, dynamic>> wiseSaying() async {
     final snapshot =
         await FirebaseFirestore.instance.collection('saying').get();
     final docs = snapshot.docs;
     docs.shuffle();
+    id = docs.first.id;
     return docs.first.data();
   }
 
@@ -79,9 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  fetchListBookmark() async {
+    var box = await Hive.openBox('bookmark');
+    listBookmark = List<String>.from(box.values);
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    fetchListBookmark();
     wiseSaying().then(
       (Map<String, dynamic> value) {
         text = value['text'];
@@ -133,11 +143,35 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                             IconButton(
                               icon: Icon(
-                                Icons.bookmark_border_outlined,
+                                listBookmark.contains(id)
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border_outlined,
                                 color: Colors.white,
                               ),
-                              onPressed: () {
-                                bookmark += 1;
+                              onPressed: () async {
+                                var box = await Hive.openBox('bookmark');
+                                if (listBookmark.contains(id)) {
+                                  bookmark -= 1;
+                                  await FirebaseFirestore.instance
+                                      .collection('saying')
+                                      .doc(id)
+                                      .update(
+                                    {'bookmark': bookmark},
+                                  );
+                                  listBookmark.remove(id);
+                                  await box.delete(listBookmark.indexOf(id));
+                                } else {
+                                  bookmark += 1;
+                                  await FirebaseFirestore.instance
+                                      .collection('saying')
+                                      .doc(id)
+                                      .update(
+                                    {'bookmark': bookmark},
+                                  );
+                                  listBookmark.add(id);
+                                  await box.add(id);
+                                }
+                                setState(() {});
                               },
                             ),
                           ],
@@ -145,19 +179,22 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Center(
                         child: Container(
+                          alignment: Alignment.center,
+                          height: 240,
                           margin: EdgeInsets.only(top: 10),
-                          child: Text(
-                            text.replaceAll('\\n', '\n'),
-                            maxLines: 6,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              height: 2.75,
-                            ),
-                            textAlign: TextAlign.center,
-                            textHeightBehavior: TextHeightBehavior(
-                              applyHeightToFirstAscent: false,
-                              applyHeightToLastDescent: false,
+                          child: SingleChildScrollView(
+                            child: Text(
+                              text.replaceAll('\\n', '\n'),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                height: 2.75,
+                              ),
+                              textAlign: TextAlign.center,
+                              textHeightBehavior: TextHeightBehavior(
+                                applyHeightToFirstAscent: false,
+                                applyHeightToLastDescent: false,
+                              ),
                             ),
                           ),
                         ),

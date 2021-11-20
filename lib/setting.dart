@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:project/adsense.dart';
 import 'package:project/premium.dart';
 import 'package:project/search.dart';
@@ -148,7 +150,9 @@ class Setting extends StatelessWidget {
                     left: 40,
                   ),
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      var box = await Hive.openBox('history');
+                      final listHistory = List<String>.from(box.values);
                       showDialog(
                           context: context,
                           builder: (_) => CupertinoAlertDialog(
@@ -168,7 +172,16 @@ class Setting extends StatelessWidget {
                                   ),
                                   CupertinoDialogAction(
                                     child: Text('一括削除'),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      await Future.wait(
+                                        listHistory.map(
+                                          (e) => FirebaseFirestore.instance
+                                              .collection('saying')
+                                              .doc(e)
+                                              .delete(),
+                                        ),
+                                      );
+                                      await box.clear();
                                       Navigator.of(context).pop();
                                     },
                                   )
@@ -239,8 +252,8 @@ class Setting extends StatelessWidget {
                   ),
                   child: GestureDetector(
                     onTap: () async {
-                      if (await canLaunch('mailto:yolo_by.hiroto@icloud.com')) {
-                        await launch('mailto:yolo_by.hiroto@icloud.com');
+                      if (await canLaunch('https://google.com')) {
+                        await launch('https://google.com');
                       } else {
                         throw 'エラー：開くことができませんでした';
                       }

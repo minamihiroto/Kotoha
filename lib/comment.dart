@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:device_info/device_info.dart';
+import 'package:hive/hive.dart';
 
 class Comment extends StatefulWidget {
   @override
@@ -72,14 +72,14 @@ class CommentState extends State<Comment> {
                 autofocus: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: '入力してください（140字以内）',
+                  hintText: '入力してください（80字以内）',
                   counterText: '',
                   hintStyle: TextStyle(fontSize: 20, color: Colors.white54),
                 ),
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.multiline,
-                maxLines: 8,
-                maxLength: 140,
+                maxLines: 6,
+                maxLength: 80,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -135,13 +135,24 @@ class CommentState extends State<Comment> {
         ),
       ),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Icon(
+            Icons.clear,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         actions: [
           TextButton(
             onPressed: () async {
               if (messageText != '' && citation != '' && _selectItem != 1) {
-                await FirebaseFirestore.instance.collection('saying').doc().set(
+                final ref =
+                    await FirebaseFirestore.instance.collection('saying').add(
                   {
                     'text': messageText,
                     'citation': citation,
@@ -149,7 +160,14 @@ class CommentState extends State<Comment> {
                     'bookmark': 0,
                   },
                 );
+                var box = await Hive.openBox('history');
+                await box.add(ref.id);
                 Navigator.of(context).pop();
+                showDialog(
+                    context: context,
+                    builder: (_) => CupertinoAlertDialog(
+                          title: Text('投稿成功🎉🎉'),
+                        ));
               } else {
                 showDialog(
                     context: context,
