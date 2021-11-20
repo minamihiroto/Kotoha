@@ -135,9 +135,9 @@ class CommentState extends State<Comment> {
         ),
       ),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(
             Icons.clear,
@@ -166,7 +166,7 @@ class CommentState extends State<Comment> {
                 showDialog(
                     context: context,
                     builder: (_) => CupertinoAlertDialog(
-                          title: Text('投稿成功🎉🎉'),
+                          title: Text('🎉🎉投稿成功🎉🎉'),
                         ));
               } else {
                 showDialog(

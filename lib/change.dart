@@ -35,6 +35,16 @@ class _ChangeState extends State<Change> with SingleTickerProviderStateMixin {
       // ボカシにしたい（ブラー？？）
       backgroundColor: Colors.black.withOpacity(0.85),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.clear,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         title: const Text(
           "環境変更",
           style: TextStyle(fontWeight: FontWeight.bold),
