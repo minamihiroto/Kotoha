@@ -6,10 +6,14 @@ import 'package:project/change.dart';
 import 'package:project/book.dart';
 import 'package:project/setting.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share/share.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Hive.initFlutter();
   runApp(MyApp());
 }
 
@@ -36,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String citation = 'エラー';
   int genre;
   String genreMessage = 'エラー';
+  int bookmark;
 
   Future<Map<String, dynamic>> wiseSaying() async {
     final snapshot =
@@ -82,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
         text = value['text'];
         citation = value['citation'];
         genre = value['genre'];
+        bookmark = value['bookmark'];
         switchBun();
         setState(() {});
       },
@@ -102,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Center(
           child: Container(
             width: 310,
-            margin: EdgeInsets.only(top: 110),
+            margin: EdgeInsets.only(top: 100),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -116,28 +122,33 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              child: Icon(
+                            IconButton(
+                              icon: Icon(
                                 Icons.share_rounded,
                                 color: Colors.white,
                               ),
+                              onPressed: () {
+                                Share.share('共有');
+                              },
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Icon(
+                            IconButton(
+                              icon: Icon(
                                 Icons.bookmark_border_outlined,
                                 color: Colors.white,
                               ),
+                              onPressed: () {
+                                bookmark += 1;
+                              },
                             ),
                           ],
                         ),
                       ),
                       Center(
                         child: Container(
-                          margin: EdgeInsets.only(top: 20),
+                          margin: EdgeInsets.only(top: 10),
                           child: Text(
                             text.replaceAll('\\n', '\n'),
-                            maxLines: 8,
+                            maxLines: 6,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
