@@ -193,8 +193,14 @@ class Setting extends StatelessWidget {
                                       );
                                       await box.clear();
                                       Navigator.of(context).pop();
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => CupertinoAlertDialog(
+                                          title: Text('削除成功'),
+                                        ),
+                                      );
                                     },
-                                  )
+                                  ),
                                 ],
                               ));
                     },
