@@ -10,45 +10,40 @@ class Bookmark extends StatefulWidget {
 
 class _BookmarkState extends State<Bookmark> {
   List<Map<String, dynamic>> mapBookmark = [];
-  String text = 'エラー';
-  int genre;
-  String genreMessage = 'エラー';
-  String citation = 'エラー';
 
   Future reading() async {
     var box = await Hive.openBox('bookmark');
     final bookmark = List<String>.from(box.values);
-    FirebaseFirestore.instance.collection('saying').doc();
-    mapBookmark = await Future.wait(
-      bookmark.map(
-        (e) async {
-          final doc = await FirebaseFirestore.instance
-              .collection('saying')
-              .doc(e)
-              .get();
-          return doc.data();
-        },
-      ).toList(),
-    );
+    await box.clear(); //一度全消し
+    for (final docId in bookmark) {
+      final ds = await FirebaseFirestore.instance
+          .collection('saying')
+          .doc(docId)
+          .get();
+      if (ds.exists) {
+        mapBookmark.add(ds.data());
+        await box.add(ds.id); //あるものだけ追加
+      }
+    }
     setState(() {});
   }
 
-  switchBun() {
+  String switchBun(int genre) {
     switch (genre) {
       case 2:
-        return genreMessage = 'ビジネス';
+        return 'ビジネス';
       case 3:
-        return genreMessage = '歌詞';
+        return '歌詞';
       case 4:
-        return genreMessage = '励まし';
+        return '励まし';
     }
+    return 'エラー';
   }
 
   @override
   void initState() {
     super.initState();
     reading();
-    switchBun();
     setState(() {});
   }
 
@@ -65,9 +60,9 @@ class _BookmarkState extends State<Bookmark> {
                 ...mapBookmark.map(
                   //リストの中でリストを扱っているから...を使う
                   (e) {
-                    citation = e['citation'];
-                    text = e['text'];
-                    switchBun();
+                    final citation = e['citation'];
+                    final text = e['text'];
+                    final genre = e['genre'];
                     setState(() {});
                     return Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
@@ -99,7 +94,7 @@ class _BookmarkState extends State<Bookmark> {
                           Container(
                             margin: EdgeInsets.only(right: 10, bottom: 10),
                             child: Text(
-                              '$genreMessage | $citation',
+                              '${switchBun(genre)} | $citation',
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
