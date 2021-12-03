@@ -56,22 +56,25 @@ class Setting extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '広告が表示される理由',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '広告が表示される理由',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -94,22 +97,25 @@ class Setting extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'プレミアムプランに変更する',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'プレミアムプランに変更する',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -132,22 +138,25 @@ class Setting extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '表示投稿の絞り込み',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '表示投稿の絞り込み',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -204,22 +213,25 @@ class Setting extends StatelessWidget {
                                 ],
                               ));
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '今までの投稿の一括削除',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '今までの投稿の一括削除',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -239,22 +251,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'お知らせ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'お知らせ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -274,22 +289,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'お問い合わせ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'お問い合わせ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -305,22 +323,25 @@ class Setting extends StatelessWidget {
                     onTap: () {
                       Share.share('共有');
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'アプリのシェア',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'アプリのシェア',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -340,22 +361,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'レビューする',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'レビューする',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -375,22 +399,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '公式Twitter',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '公式Twitter',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -410,22 +437,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '公式Instagram',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '公式Instagram',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -445,22 +475,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '利用規約',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '利用規約',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -480,22 +513,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'プライバシーポリシー',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'プライバシーポリシー',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -515,22 +551,25 @@ class Setting extends StatelessWidget {
                         throw 'エラー：開くことができませんでした';
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'お世話になった方々',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white70,
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'お世話になった方々',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white70,
+                            ),
                           ),
-                        ),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ],
+                          Icon(
+                            Icons.chevron_right_outlined,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
