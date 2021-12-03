@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:project/show.dart';
 
 class Bookmark extends StatefulWidget {
   @override
@@ -66,51 +67,66 @@ class _BookmarkState extends State<Bookmark> {
                     setState(() {});
                     return Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: 30, left: 10, right: 10, bottom: 20),
-                            child: Center(
-                              child: Text(
-                                text,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  height: 2.25,
-                                ),
-                                textAlign: TextAlign.center,
-                                textHeightBehavior: TextHeightBehavior(
-                                  applyHeightToFirstAscent: false,
-                                  applyHeightToLastDescent: false,
-                                ),
-                              ),
+                      child: GestureDetector(
+                        onTap: () {
+                          // 画面遷移
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) =>
+                                  Show(citation,text,switchBun(genre)),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(right: 10, bottom: 10),
-                            child: Text(
-                              '${switchBun(genre)} | $citation',
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white70,
-                                height: 2.75,
+                          );
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    top: 30, left: 10, right: 10, bottom: 20),
+                                child: Center(
+                                  child: Text(
+                                    text,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                      height: 2.25,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                    textHeightBehavior: TextHeightBehavior(
+                                      applyHeightToFirstAscent: false,
+                                      applyHeightToLastDescent: false,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              textAlign: TextAlign.center,
-                              textHeightBehavior: TextHeightBehavior(
-                                applyHeightToFirstAscent: false,
-                                applyHeightToLastDescent: false,
+                              Container(
+                                margin: EdgeInsets.only(right: 10, bottom: 10),
+                                child: Text(
+                                  '${switchBun(genre)} | $citation',
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white70,
+                                    height: 2.75,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  textHeightBehavior: TextHeightBehavior(
+                                    applyHeightToFirstAscent: false,
+                                    applyHeightToLastDescent: false,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Divider(color: Colors.white54),
+                            ],
                           ),
-                          Divider(color: Colors.white54),
-                        ],
+                        ),
                       ),
                     );
                   },

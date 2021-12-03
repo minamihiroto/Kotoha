@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
+                    children:[
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,

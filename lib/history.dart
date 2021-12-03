@@ -11,10 +11,6 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   List<Map<String, dynamic>> mapHistory = [];
-  String text = 'エラー';
-  int genre;
-  String genreMessage = 'エラー';
-  String citation = 'エラー';
 
   Future reading() async {
     var box = await Hive.openBox('history');
@@ -34,14 +30,14 @@ class _HistoryState extends State<History> {
     setState(() {});
   }
 
-  switchBun() {
+  switchBun(int genre) {
     switch (genre) {
       case 2:
-        return genreMessage = 'ビジネス';
+        return 'ビジネス';
       case 3:
-        return genreMessage = '歌詞';
+        return '歌詞';
       case 4:
-        return genreMessage = '励まし';
+        return '励まし';
     }
   }
 
@@ -49,7 +45,6 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
     reading();
-    switchBun();
     setState(() {});
   }
 
@@ -66,9 +61,9 @@ class _HistoryState extends State<History> {
               ...mapHistory.map(
                 //リストの中でリストを扱っているから...を使う
                 (e) {
-                  citation = e['citation'];
-                  text = e['text'];
-                  switchBun();
+                  final citation = e['citation'];
+                  final text = e['text'];
+                  final genre = e['genre'];
                   setState(() {});
                   return Container(
                     margin: EdgeInsets.only(left: 20, right: 20),
@@ -81,24 +76,46 @@ class _HistoryState extends State<History> {
                               PageRouteBuilder(
                                 opaque: false,
                                 pageBuilder: (BuildContext context, _, __) =>
-                                    Show(),
+                                    Show(citation,text,switchBun(genre)),
                               ),
                             );
                           },
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: 30, left: 10, right: 10, bottom: 20),
-                                child: Center(
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: 30, left: 10, right: 10, bottom: 20),
+                                  child: Center(
+                                    child: Text(
+                                      text,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        height: 2.25,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      textHeightBehavior: TextHeightBehavior(
+                                        applyHeightToFirstAscent: false,
+                                        applyHeightToLastDescent: false,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(right: 10, bottom: 10),
                                   child: Text(
-                                    text,
+                                    '${switchBun(genre)} | $citation',
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.white,
-                                      height: 2.25,
+                                      fontSize: 14,
+                                      color: Colors.white70,
+                                      height: 2.75,
                                     ),
                                     textAlign: TextAlign.center,
                                     textHeightBehavior: TextHeightBehavior(
@@ -107,26 +124,8 @@ class _HistoryState extends State<History> {
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                child: Text(
-                                  '$genreMessage | $citation',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white70,
-                                    height: 2.75,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  textHeightBehavior: TextHeightBehavior(
-                                    applyHeightToFirstAscent: false,
-                                    applyHeightToLastDescent: false,
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         Divider(color: Colors.white54),
