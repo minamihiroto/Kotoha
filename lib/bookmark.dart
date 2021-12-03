@@ -74,7 +74,7 @@ class _BookmarkState extends State<Bookmark> {
                             PageRouteBuilder(
                               opaque: false,
                               pageBuilder: (BuildContext context, _, __) =>
-                                  Show(citation,text,switchBun(genre)),
+                                  Show(citation, text, switchBun(genre)),
                             ),
                           );
                         },
@@ -105,23 +105,67 @@ class _BookmarkState extends State<Bookmark> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(right: 10, bottom: 10),
-                                child: Text(
-                                  '${switchBun(genre)} | $citation',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white70,
-                                    height: 2.75,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(right: 10),
+                                    child: Text(
+                                      '${switchBun(genre)} | $citation',
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white70,
+                                        height: 2.75,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      textHeightBehavior: TextHeightBehavior(
+                                        applyHeightToFirstAscent: false,
+                                        applyHeightToLastDescent: false,
+                                      ),
+                                    ),
                                   ),
-                                  textAlign: TextAlign.center,
-                                  textHeightBehavior: TextHeightBehavior(
-                                    applyHeightToFirstAscent: false,
-                                    applyHeightToLastDescent: false,
+                                  Container(
+                                    child: GestureDetector(
+                                        onTap: () async {
+                                          var box =
+                                              await Hive.openBox('bookmark');
+                                          final listBookmark =
+                                              List<String>.from(box.values);
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) =>
+                                                CupertinoAlertDialog(
+                                              content: Text(
+                                                "$text",
+                                                style: TextStyle(
+                                                  height: 1.5,
+                                                ),
+                                              ),
+                                              actions: [
+                                                CupertinoDialogAction(
+                                                  child: Text('ブックマークから外す'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                CupertinoDialogAction(
+                                                  child: Text('キャンセル'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.delete_forever_rounded,
+                                          color: Colors.grey,
+                                        )),
                                   ),
-                                ),
+                                ],
                               ),
                               Divider(color: Colors.white54),
                             ],

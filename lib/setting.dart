@@ -173,45 +173,46 @@ class Setting extends StatelessWidget {
                       var box = await Hive.openBox('history');
                       final listHistory = List<String>.from(box.values);
                       showDialog(
-                          context: context,
-                          builder: (_) => CupertinoAlertDialog(
-                                title: Text("一括削除"),
-                                content: Text(
-                                  "今まで投稿されたものは\n二度と復元することはできません。\nもし削除されるにしてもその前に\n別の場所に保存しておいてください。\nそれは過去のあなたの\n支えになったはずの言葉だから。",
-                                  style: TextStyle(
-                                    height: 1.5,
+                        context: context,
+                        builder: (_) => CupertinoAlertDialog(
+                          title: Text("一括削除"),
+                          content: Text(
+                            "今まで投稿されたものは\n二度と復元することはできません。\nもし削除されるにしてもその前に\n別の場所に保存しておいてください。\nそれは過去のあなたの\n支えになったはずの言葉だから。",
+                            style: TextStyle(
+                              height: 1.5,
+                            ),
+                          ),
+                          actions: [
+                            CupertinoDialogAction(
+                              child: Text('キャンセル'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            CupertinoDialogAction(
+                              child: Text('一括削除'),
+                              onPressed: () async {
+                                await Future.wait(
+                                  listHistory.map(
+                                    (e) => FirebaseFirestore.instance
+                                        .collection('saying')
+                                        .doc(e)
+                                        .delete(),
                                   ),
-                                ),
-                                actions: [
-                                  CupertinoDialogAction(
-                                    child: Text('キャンセル'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
+                                );
+                                await box.clear();
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => CupertinoAlertDialog(
+                                    title: Text('削除成功'),
                                   ),
-                                  CupertinoDialogAction(
-                                    child: Text('一括削除'),
-                                    onPressed: () async {
-                                      await Future.wait(
-                                        listHistory.map(
-                                          (e) => FirebaseFirestore.instance
-                                              .collection('saying')
-                                              .doc(e)
-                                              .delete(),
-                                        ),
-                                      );
-                                      await box.clear();
-                                      Navigator.of(context).pop();
-                                      showDialog(
-                                        context: context,
-                                        builder: (_) => CupertinoAlertDialog(
-                                          title: Text('削除成功'),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ));
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     child: Container(
                       color: Colors.transparent,

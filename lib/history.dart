@@ -14,19 +14,18 @@ class _HistoryState extends State<History> {
 
   Future reading() async {
     var box = await Hive.openBox('history');
-    final history = List<String>.from(box.values);
-    FirebaseFirestore.instance.collection('saying').doc();
-    mapHistory = await Future.wait(
-      history.map(
-        (e) async {
-          final doc = await FirebaseFirestore.instance
-              .collection('saying')
-              .doc(e)
-              .get();
-          return doc.data();
-        },
-      ).toList(),
-    );
+    final bookmark = List<String>.from(box.values);
+    await box.clear(); //一度全消し
+    for (final docId in bookmark) {
+      final ds = await FirebaseFirestore.instance
+          .collection('saying')
+          .doc(docId)
+          .get();
+      if (ds.exists) {
+        mapHistory.add(ds.data());
+        await box.add(ds.id); //あるものだけ追加
+      }
+    }
     setState(() {});
   }
 
@@ -64,6 +63,7 @@ class _HistoryState extends State<History> {
                   final citation = e['citation'];
                   final text = e['text'];
                   final genre = e['genre'];
+                  final mark = e['bookmark'];
                   setState(() {});
                   return Container(
                     margin: EdgeInsets.only(left: 20, right: 20),
@@ -76,7 +76,7 @@ class _HistoryState extends State<History> {
                               PageRouteBuilder(
                                 opaque: false,
                                 pageBuilder: (BuildContext context, _, __) =>
-                                    Show(citation,text,switchBun(genre)),
+                                    Show(citation, text, switchBun(genre)),
                               ),
                             );
                           },
@@ -106,23 +106,84 @@ class _HistoryState extends State<History> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(right: 10, bottom: 10),
-                                  child: Text(
-                                    '${switchBun(genre)} | $citation',
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white70,
-                                      height: 2.75,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        'ブックマーク数：$mark',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white70,
+                                        ),
+                                      ),
                                     ),
-                                    textAlign: TextAlign.center,
-                                    textHeightBehavior: TextHeightBehavior(
-                                      applyHeightToFirstAscent: false,
-                                      applyHeightToLastDescent: false,
+                                    Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(right: 10),
+                                          child: Text(
+                                            '${switchBun(genre)} | $citation',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.white70,
+                                              height: 2.75,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            textHeightBehavior:
+                                                TextHeightBehavior(
+                                              applyHeightToFirstAscent: false,
+                                              applyHeightToLastDescent: false,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          child: GestureDetector(
+                                              onTap: () async {
+                                                var box = await Hive.openBox(
+                                                    'history');
+                                                final listHistory =
+                                                    List<String>.from(
+                                                        box.values);
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (_) =>
+                                                      CupertinoAlertDialog(
+                                                    content: Text(
+                                                      "$text",
+                                                      style: TextStyle(
+                                                        height: 1.5,
+                                                      ),
+                                                    ),
+                                                    actions: [
+                                                      CupertinoDialogAction(
+                                                        child: Text('投稿を削除する'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      CupertinoDialogAction(
+                                                        child: Text('キャンセル'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                              child: Icon(
+                                                Icons.delete_forever_rounded,
+                                                color: Colors.grey,
+                                              )),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             ),
