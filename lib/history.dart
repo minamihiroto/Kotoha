@@ -159,7 +159,7 @@ class _HistoryState extends State<History> {
                                                     ),
                                                     actions: [
                                                       CupertinoDialogAction(
-                                                        child: Text('投稿を削除する'),
+                                                        child: Text('自身の投稿を削除する'),
                                                         onPressed: () {
                                                           Navigator.of(context)
                                                               .pop();
