@@ -44,3 +44,5 @@ flutter:
   - images/
   # svg素材置き場
   - assets/
+  # サウンド置き場
+  - sound/
