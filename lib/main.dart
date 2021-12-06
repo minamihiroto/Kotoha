@@ -100,9 +100,17 @@ class _MyHomePageState extends State<MyHomePage> {
         return pool.load(soundData);
       },
     );
-    await pool.play(
-      soundId,repeat: -1
+    await pool.play(soundId, repeat: -1);
+  }
+
+  soundStart2() async {
+    Soundpool pool = Soundpool(streamType: StreamType.notification);
+    int soundId = await rootBundle.load("sound/insect.mp3").then(
+      (ByteData soundData) {
+        return pool.load(soundData);
+      },
     );
+    await pool.play(soundId, repeat: -1);
   }
 
   @override
@@ -127,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     mainLoop();
     soundStart();
+    soundStart2();
   }
 
   @override
