@@ -10,8 +10,6 @@ import 'package:share/share.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:video_player/video_player.dart';
-import 'package:soundpool/soundpool.dart';
-import 'package:flutter/services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,26 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  soundStart() async {
-    Soundpool pool = Soundpool(streamType: StreamType.notification);
-    int soundId = await rootBundle.load("sound/wind.mp3").then(
-      (ByteData soundData) {
-        return pool.load(soundData);
-      },
-    );
-    await pool.play(soundId, repeat: -1);
-  }
-
-  soundStart2() async {
-    Soundpool pool = Soundpool(streamType: StreamType.notification);
-    int soundId = await rootBundle.load("sound/insect.mp3").then(
-      (ByteData soundData) {
-        return pool.load(soundData);
-      },
-    );
-    await pool.play(soundId, repeat: -1);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -134,8 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
     mainLoop();
-    soundStart();
-    soundStart2();
   }
 
   @override
