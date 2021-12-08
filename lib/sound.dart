@@ -9,7 +9,6 @@ class Sound extends StatefulWidget {
 }
 
 class _SoundState extends State<Sound> {
-
   soundStart() async {
     Soundpool pool = Soundpool(streamType: StreamType.notification);
     int soundId = await rootBundle.load("sound/wind.mp3").then(
@@ -38,7 +37,26 @@ class _SoundState extends State<Sound> {
       body: Center(
         child: Container(
           child: Column(
-            children: [],
+            children: [
+              TextButton(
+                onPressed: () {
+                  soundStart();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                ),
+                child: Text('風の音'),
+              ),
+              TextButton(
+                onPressed: () {
+                  soundStart2();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                ),
+                child: Text('虫の音'),
+              ),
+            ],
           ),
         ),
       ),
