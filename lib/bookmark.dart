@@ -68,6 +68,7 @@ class _BookmarkState extends State<Bookmark> {
                 final citation = e['citation'];
                 final text = e['text'];
                 final genre = e['genre'];
+                final bookmark = e['bookmark'];
                 final docId = e['id'];
                 setState(() {});
                 return Container(
@@ -150,19 +151,23 @@ class _BookmarkState extends State<Bookmark> {
                                             CupertinoDialogAction(
                                               child: Text('ブックマークから外す'),
                                               onPressed: () async {
-                                                await FirebaseFirestore.instance
-                                                    .collection('saying')
-                                                    .doc(docId)
-                                                    .update(
-                                                  {
-                                                    'bookmark':
-                                                        FieldValue.increment(-1)
-                                                  },
-                                                );
+                                                if (bookmark > 0) {
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('saying')
+                                                      .doc(docId)
+                                                      .update(
+                                                    {
+                                                      'bookmark':
+                                                          FieldValue.increment(
+                                                              -1)
+                                                    },
+                                                  );
+                                                }
                                                 await box.delete(listBookmark
                                                     .indexOf(docId));
                                                 Navigator.of(context).pop();
-                                                setState(() {});
+                                                setState(() {});// 再描画されないからmainページに戻ってもブックマークされっぱなしの時がある
                                               },
                                             ),
                                             CupertinoDialogAction(

@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int bookmark;
   String id;
   List<String> listBookmark = [];
+  bool _isDisabled = false;
 
   VideoPlayerController _controller;
 
@@ -168,31 +169,48 @@ class _MyHomePageState extends State<MyHomePage> {
                                       : Icons.bookmark_border_outlined,
                                   color: Colors.white,
                                 ),
-                                onPressed: () async {
-                                  var box = await Hive.openBox('bookmark');
-                                  if (listBookmark.contains(id)) {
-                                    bookmark -= 1;
-                                    await FirebaseFirestore.instance
-                                        .collection('saying')
-                                        .doc(id)
-                                        .update(
-                                      {'bookmark': bookmark},
-                                    );
-                                    listBookmark.remove(id);
-                                    await box.delete(listBookmark.indexOf(id));
-                                  } else {
-                                    bookmark += 1;
-                                    await FirebaseFirestore.instance
-                                        .collection('saying')
-                                        .doc(id)
-                                        .update(
-                                      {'bookmark': bookmark},
-                                    );
-                                    listBookmark.add(id);
-                                    await box.add(id);
-                                  }
-                                  setState(() {});
-                                },
+                                onPressed: _isDisabled
+                                    ? null
+                                    : () async {
+                                        if (!_isDisabled) {
+                                          // なんちゃって連打防止
+                                          setState(() => _isDisabled = true);
+                                          var box =
+                                              await Hive.openBox('bookmark');
+                                          if (!listBookmark.contains(id)) {
+                                            listBookmark.add(id);
+                                            await FirebaseFirestore.instance
+                                                .collection('saying')
+                                                .doc(id)
+                                                .update(
+                                              {
+                                                'bookmark':
+                                                    FieldValue.increment(1)
+                                              },
+                                            );
+                                            await box.add(id);
+                                            setState(() => _isDisabled = false);
+                                          } else {
+                                            listBookmark.remove(id);
+                                            if (bookmark > 0) {
+                                              await FirebaseFirestore.instance
+                                                  .collection('saying')
+                                                  .doc(id)
+                                                  .update(
+                                                {
+                                                  'bookmark':
+                                                      FieldValue.increment(-1)
+                                                },
+                                              );
+                                            }
+
+                                            await box.delete(
+                                                listBookmark.indexOf(id));
+                                            setState(() => _isDisabled = false);
+                                          }
+                                        }
+                                        setState(() {});
+                                      },
                               ),
                             ],
                           ),
