@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 class Comment extends StatefulWidget {
   @override
@@ -151,17 +152,21 @@ class CommentState extends State<Comment> {
           TextButton(
             onPressed: () async {
               if (messageText != '' && citation != '' && _selectItem != 1) {
-                final ref =
-                    await FirebaseFirestore.instance.collection('saying').add(
+                final docId = Uuid().v4();
+                await FirebaseFirestore.instance
+                    .collection('saying')
+                    .doc(docId)
+                    .set(
                   {
                     'text': messageText,
                     'citation': citation,
                     'genre': _selectItem,
                     'bookmark': 0,
+                    'id': docId
                   },
                 );
                 var box = await Hive.openBox('history');
-                await box.add(ref.id);
+                await box.add(docId);
                 Navigator.of(context).pop();
                 showDialog(
                     context: context,
