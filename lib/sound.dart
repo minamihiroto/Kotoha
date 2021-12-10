@@ -13,26 +13,41 @@ class _SoundState extends State<Sound> {
   bool sound = false; // 音1が鳴っているかの判断
   bool sound2 = false; // 音2が鳴っているかの判断
 
+  //soundpool
+  Soundpool pool = Soundpool(streamType: StreamType.notification);
+  int soundStreamId;
+  int soundStreamId2;
+
+  soundLoad() async {
+    var soundId = await rootBundle.load("sound/wind.mp3");
+    return await pool.load(soundId);
+  }
+
   soundStart() async {
-    //これを分解したい ロードと再生 await pool.stop(soundId);も追加
-    Soundpool pool = Soundpool(streamType: StreamType.notification);
-    int soundId = await rootBundle.load("sound/wind.mp3").then(
-      (ByteData soundData) {
-        return pool.load(soundData);
-      },
-    );
-    await pool.play(soundId, repeat: -1);
+    var soundStart = await soundLoad();
+    soundStreamId = await pool.play(soundStart);
+  }
+
+  soundStop() async {
+    if (soundStreamId != null) {
+      await pool.stop(soundStreamId);
+    }
+  }
+
+  soundLoad2() async {
+    var soundId2 = await rootBundle.load("sound/insect.mp3");
+    return await pool.load(soundId2);
   }
 
   soundStart2() async {
-    //これを分解したい ロードと再生 await pool.stop(soundId);も追加
-    Soundpool pool = Soundpool(streamType: StreamType.notification);
-    int soundId = await rootBundle.load("sound/insect.mp3").then(
-      (ByteData soundData) {
-        return pool.load(soundData);
-      },
-    );
-    await pool.play(soundId, repeat: -1);
+    var soundStart2 = await soundLoad2();
+    soundStreamId2 = await pool.play(soundStart2);
+  }
+
+  soundStop2() async {
+    if (soundStreamId2 != null) {
+      await pool.stop(soundStreamId2);
+    }
   }
 
   @override
@@ -49,14 +64,15 @@ class _SoundState extends State<Sound> {
                     ? null
                     : () {
                         if (!_isDisabled) {
-                          if (!sound) {// サウンドが今なっているかどうかの判断
+                          if (!sound) {
+                            // サウンドが今なっているかどうかの判断
                             setState(() => _isDisabled = true);
                             soundStart();
                             sound = true;
                             setState(() => _isDisabled = false);
                           } else {
                             setState(() => _isDisabled = true);
-                            // soundStop();
+                            soundStop();
                             sound = false;
                             setState(() => _isDisabled = false);
                           }
@@ -80,7 +96,7 @@ class _SoundState extends State<Sound> {
                             setState(() => _isDisabled = false);
                           } else {
                             setState(() => _isDisabled = true);
-                            // soundStop2();
+                            soundStop2();
                             sound2 = false;
                             setState(() => _isDisabled = false);
                           }
