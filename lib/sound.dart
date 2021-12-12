@@ -57,56 +57,62 @@ class _SoundState extends State<Sound> {
       backgroundColor: Colors.black.withOpacity(0),
       body: Center(
         child: Container(
+          margin: EdgeInsets.only(top: 40,right: 30,left: 30),
           child: Column(
             children: [
-              TextButton(
-                onPressed: _isDisabled
-                    ? null
-                    : () {
-                        if (!_isDisabled) {
-                          if (!sound) {
-                            // サウンドが今なっているかどうかの判断
-                            setState(() => _isDisabled = true);
-                            soundStart();
-                            sound = true;
-                            setState(() => _isDisabled = false);
-                          } else {
-                            setState(() => _isDisabled = true);
-                            soundStop();
-                            sound = false;
-                            setState(() => _isDisabled = false);
-                          }
-                        }
-                        setState(() {});
-                      },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                child: Text('風の音'),
-              ),
-              TextButton(
-                onPressed: _isDisabled
-                    ? null
-                    : () {
-                        if (!_isDisabled) {
-                          if (!sound2) {
-                            setState(() => _isDisabled = true);
-                            soundStart2();
-                            sound2 = true;
-                            setState(() => _isDisabled = false);
-                          } else {
-                            setState(() => _isDisabled = true);
-                            soundStop2();
-                            sound2 = false;
-                            setState(() => _isDisabled = false);
-                          }
-                        }
-                        setState(() {});
-                      },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                child: Text('虫の音'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: _isDisabled
+                        ? null
+                        : () {
+                            if (!_isDisabled) {
+                              if (!sound) {
+                                // サウンドが今なっているかどうかの判断
+                                setState(() => _isDisabled = true);
+                                soundStart();
+                                sound = true;
+                                setState(() => _isDisabled = false);
+                              } else {
+                                setState(() => _isDisabled = true);
+                                soundStop();
+                                sound = false;
+                                setState(() => _isDisabled = false);
+                              }
+                            }
+                            setState(() {});
+                          },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                    ),
+                    child: Text('風の音'),
+                  ),
+                  TextButton(
+                    onPressed: _isDisabled
+                        ? null
+                        : () {
+                            if (!_isDisabled) {
+                              if (!sound2) {
+                                setState(() => _isDisabled = true);
+                                soundStart2();
+                                sound2 = true;
+                                setState(() => _isDisabled = false);
+                              } else {
+                                setState(() => _isDisabled = true);
+                                soundStop2();
+                                sound2 = false;
+                                setState(() => _isDisabled = false);
+                              }
+                            }
+                            setState(() {});
+                          },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                    ),
+                    child: Text('虫の音'),
+                  ),
+                ],
               ),
             ],
           ),
