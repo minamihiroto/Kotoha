@@ -64,6 +64,7 @@ class _HistoryState extends State<History> {
                   final text = e['text'];
                   final genre = e['genre'];
                   final mark = e['bookmark'];
+                  final docId = e['id'];
                   setState(() {});
                   return Container(
                     margin: EdgeInsets.only(left: 20, right: 20),
@@ -159,10 +160,25 @@ class _HistoryState extends State<History> {
                                                     ),
                                                     actions: [
                                                       CupertinoDialogAction(
-                                                        child: Text('自身の投稿を削除する'),
-                                                        onPressed: () {
+                                                        child:
+                                                            Text('自身の投稿を削除する'),
+                                                        onPressed: () async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'saying')
+                                                              .doc(docId)
+                                                              .delete();
+                                                          await box.delete(
+                                                              listHistory
+                                                                  .indexOf(
+                                                                      docId));
                                                           Navigator.of(context)
                                                               .pop();
+                                                          setState(() {
+                                                            mapHistory
+                                                                .remove(e);
+                                                          });
                                                         },
                                                       ),
                                                       CupertinoDialogAction(
