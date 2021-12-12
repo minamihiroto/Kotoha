@@ -86,7 +86,10 @@ class _SoundState extends State<Sound> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                     ),
-                    child: Text('風の音'),
+                    child: Text('風の音',
+                      style: TextStyle(
+                        color: sound ? Colors.blue : Colors.grey,
+                      ),),
                   ),
                   TextButton(
                     onPressed: _isDisabled
@@ -110,7 +113,10 @@ class _SoundState extends State<Sound> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                     ),
-                    child: Text('虫の音'),
+                    child: Text('虫の音',
+                      style: TextStyle(
+                        color: sound2 ? Colors.blue : Colors.grey,
+                      ),),
                   ),
                 ],
               ),
