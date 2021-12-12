@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 class Show extends StatefulWidget {
-  String genre;
-  String text;
-  String citation;
+  final String genre;
+  final String text;
+  final String citation;
   Show(this.citation, this.text, this.genre);
 
   @override
@@ -12,16 +13,30 @@ class Show extends StatefulWidget {
 }
 
 class _ShowState extends State<Show> {
+  VideoPlayerController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset("movies/background-sample.mp4")
+      ..initialize().then((_) {
+        _controller.play();
+        _controller.setLooping(true);
+        setState(() {});
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('movies/background-sample.jpg'),
-              fit: BoxFit.cover,
+        SizedBox.expand(
+          child: FittedBox(
+            fit: BoxFit.fill,
+            child: SizedBox(
+              width: _controller.value.size?.width ?? 0,
+              height: _controller.value.size?.height ?? 0,
+              child: VideoPlayer(_controller),
             ),
           ),
         ),
