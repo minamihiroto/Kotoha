@@ -25,7 +25,7 @@ class _SoundState extends State<Sound> {
 
   soundStart() async {
     var soundStart = await soundLoad();
-    soundStreamId = await pool.play(soundStart);
+    soundStreamId = await pool.play(soundStart, repeat: -1);
   }
 
   soundStop() async {
@@ -41,7 +41,7 @@ class _SoundState extends State<Sound> {
 
   soundStart2() async {
     var soundStart2 = await soundLoad2();
-    soundStreamId2 = await pool.play(soundStart2);
+    soundStreamId2 = await pool.play(soundStart2, repeat: -1);
   }
 
   soundStop2() async {
