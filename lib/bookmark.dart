@@ -167,7 +167,9 @@ class _BookmarkState extends State<Bookmark> {
                                                 await box.delete(listBookmark
                                                     .indexOf(docId));
                                                 Navigator.of(context).pop();
-                                                setState(() {});// 再描画されないからmainページに戻ってもブックマークされっぱなしの時がある
+                                                setState(() {
+                                                  mapBookmark.remove(e);
+                                                });
                                               },
                                             ),
                                             CupertinoDialogAction(

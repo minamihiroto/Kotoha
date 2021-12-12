@@ -115,6 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
     mainLoop();
   }
 
+  load() {
+    fetchListBookmark();
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -311,9 +315,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   // 画面遷移
-                                  Navigator.of(context).push(
+                                  await Navigator.of(context).push(
                                     PageRouteBuilder(
                                       opaque: false,
                                       pageBuilder:
@@ -321,6 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               Book(),
                                     ),
                                   );
+                                  load();
                                 },
                                 child: SvgPicture.asset(
                                   'assets/book.svg',
