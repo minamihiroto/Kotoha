@@ -92,15 +92,23 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset("movies/background-sample.mp4")
+  moviePlay() async {
+    var box = await Hive.openBox('movie');
+    if (box.isEmpty) {
+      await box.add("movies/background-sample.mp4");
+    }
+    _controller = VideoPlayerController.asset(box.getAt(0))
       ..initialize().then((_) {
         _controller.play();
         _controller.setLooping(true);
         setState(() {});
       });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    moviePlay();
     fetchListBookmark();
     wiseSaying().then(
       (Map<String, dynamic> value) {
@@ -117,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   load() {
     fetchListBookmark();
+    moviePlay();
   }
 
   @override
@@ -295,9 +304,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   // 画面遷移
-                                  Navigator.of(context).push(
+                                  await Navigator.of(context).push(
                                     PageRouteBuilder(
                                       opaque: false,
                                       pageBuilder:
@@ -305,6 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               Change(),
                                     ),
                                   );
+                                  load();
                                 },
                                 child: SvgPicture.asset(
                                   'assets/change.svg',
