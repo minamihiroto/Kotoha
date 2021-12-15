@@ -12,21 +12,25 @@ class _MovieState extends State<Movie> {
   List<String> listMovie = [];
   int movieKind;
 
-  movieSet() async {
+  Future<void> movieSet() async {
     var box = await Hive.openBox('movie');
     switch (box.getAt(0)) {
       case "movies/background-sample.mp4":
-        return movieKind = 1;
+        movieKind = 1;
+        break;
       case "movies/wave.mp4":
-        return movieKind = 2;
+        movieKind = 2;
+        break;
     }
   }
 
   @override
   void initState() {
     super.initState();
-    movieSet();
-    setState(() {});
+    Future(() async {
+      await movieSet();
+      setState(() {});
+    });
   }
 
   @override
