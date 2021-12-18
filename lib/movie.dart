@@ -58,7 +58,7 @@ class _MovieState extends State<Movie> {
                                 movieKind = 1;
                               }
                             }
-                            setState(() {});
+                            Navigator.of(context).pop();
                           },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
@@ -82,7 +82,7 @@ class _MovieState extends State<Movie> {
                                 movieKind = 2;
                               }
                             }
-                            setState(() {});
+                            Navigator.of(context).pop();
                           },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
