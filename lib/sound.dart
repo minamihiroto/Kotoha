@@ -15,6 +15,7 @@ class _SoundState extends State<Sound> {
 
   //soundpool
   Soundpool pool = Soundpool(streamType: StreamType.notification);
+  //下記をHiveにする
   int soundStreamId;
   int soundStreamId2;
 

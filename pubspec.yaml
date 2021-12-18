@@ -27,8 +27,6 @@ dependencies:
   video_player: ^1.0.1
   #サウンドのために追加
   soundpool: ^1.1.3
-  #BGMのために追加
-  audioplayers: ^0.17.4
   #ランダム
   uuid: ^2.2.2
 
