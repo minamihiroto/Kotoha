@@ -4,13 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:flutter/services.dart';
 
-// class SoundIdAggregation {
-//   SoundIdAggregation({this.soundId, this.streamingSoundId});
-
-//   int soundId;
-//   int streamingSoundId;
-// }
-
 // シングルトンの ChangeNotifier クラス
 class SoudPoolController extends ChangeNotifier {
   factory SoudPoolController() => _instance;
