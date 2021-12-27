@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:flutter/services.dart';
 
-class SoundPoolManager {
-  //シングルトンパターンで実装されたクラスは、その仕様として実行時に一つしかインスタンスを作ることができないように設計される
-  factory SoundPoolManager() => _instance;
-  SoundPoolManager._internal();
-  static final SoundPoolManager _instance = SoundPoolManager._internal();
+// class SoundIdAggregation {
+//   SoundIdAggregation({this.soundId, this.streamingSoundId});
+
+//   int soundId;
+//   int streamingSoundId;
+// }
+
+// シングルトンの ChangeNotifier クラス
+class SoudPoolController extends ChangeNotifier {
+  factory SoudPoolController() => _instance;
+  SoudPoolController._internal();
+  static final SoudPoolController _instance = SoudPoolController._internal();
 
   Soundpool pool;
   bool loaded = false;
-  int soundStreamId1;
-  int soundStreamId2;
+  List<int> streamingSoundIds = [];
+  Map<String, int> soundStreamingIdMap = {};
 
   void loadSoundPool() {
     if (loaded) {
@@ -20,14 +28,54 @@ class SoundPoolManager {
     }
     pool = Soundpool(streamType: StreamType.notification);
     loaded = true;
+
+    notifyListeners(); // ChangeNotiferProviderがあるビューに通知できる
   }
 
-  void setSoundStremId1(int id) {
-    soundStreamId1 = id;
+  void updateStreamingSoundId(int soundId) {
+    if (streamingSoundIds.contains(soundId)) {
+      streamingSoundIds.remove(soundId);
+    } else {
+      streamingSoundIds.add(soundId);
+    }
+    notifyListeners();
   }
 
-  void setSoundStremId2(int id) {
-    soundStreamId2 = id;
+  Future<int> getWindSoundId() async {
+    final rawData = await rootBundle.load("sound/wind.mp3");
+    return await pool.load(rawData);
+  }
+
+  Future<void> startWindSound() async {
+    final soundId = await getWindSoundId();
+    if (soundStreamingIdMap["wind"] != null) {
+      return;
+    }
+    final soundStreamId = await pool.play(soundId, repeat: -1);
+    soundStreamingIdMap["wind"] = soundStreamId;
+    updateStreamingSoundId(soundStreamId);
+  }
+
+  //あとで共通化する
+  Future<int> getInsectSoundId() async {
+    var soundId = await rootBundle.load("sound/insect.mp3");
+    return await pool.load(soundId);
+  }
+
+  Future<void> startInsectSound() async {
+    final soundId = await getInsectSoundId();
+    if (soundStreamingIdMap["insect"] != null) {
+      return;
+    }
+    final soundStreamId = await pool.play(soundId, repeat: -1);
+    soundStreamingIdMap["insect"] = soundStreamId;
+    updateStreamingSoundId(soundStreamId);
+  }
+
+  Future<void> stopSound(int soundStreamId, String soundName) async {
+    await pool.stop(soundStreamId);
+    soundStreamingIdMap[soundName] = null;
+    updateStreamingSoundId(soundStreamId);
   }
 }
 
@@ -37,145 +85,71 @@ class Sound extends StatefulWidget {
 }
 
 class _SoundState extends State<Sound> {
-  bool _isDisabled = false;
-
-  bool sound = false;
-  bool sound2 = false;
-
-  Soundpool pool;
-  SoundPoolManager soundPoolManager = SoundPoolManager();
-
-  int soundStreamId;
-  int soundStreamId2;
-
-  @override
-  void initState() {
-    super.initState();
-    if (!soundPoolManager.loaded) {
-      soundPoolManager.loadSoundPool();
-      pool = SoundPoolManager().pool;
-    }
-  }
-
-  soundLoad() async {
-    var soundId = await rootBundle.load("sound/wind.mp3");
-    return await pool.load(soundId);
-  }
-
-  soundStart() async {
-    var soundStart = await soundLoad();
-    soundStreamId = await pool.play(soundStart, repeat: -1);
-    soundPoolManager.setSoundStremId1(soundStreamId);
-  }
-
-  soundStop() async {
-    await soundPoolManager.pool.stop(soundPoolManager.soundStreamId1);
-  }
-
-  soundLoad2() async {
-    var soundId2 = await rootBundle.load("sound/insect.mp3");
-    return await pool.load(soundId2);
-  }
-
-  soundStart2() async {
-    var soundStart2 = await soundLoad2();
-    soundStreamId2 = await pool.play(soundStart2, repeat: -1);
-    soundPoolManager.setSoundStremId2(soundStreamId2);
-  }
-
-  soundStop2() async {
-    await soundPoolManager.pool.stop(soundPoolManager.soundStreamId2);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // ボカシにしたい（ブラー？？）
-      backgroundColor: Colors.black.withOpacity(0),
-      body: Center(
-        child: Container(
-          margin: EdgeInsets.only(top: 40, right: 30, left: 30),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                    onPressed: _isDisabled
-                        ? null
-                        : () {
-                            if (!_isDisabled) {
-                              if (!sound) {
-                                // サウンドが今なっているかどうかの判断
-                                setState(() => _isDisabled = true);
-                                soundStart();
-                                sound = true;
-                                setState(() => _isDisabled = false);
-                              } else {
-                                setState(() => _isDisabled = true);
-                                soundStop();
-                                sound = false;
-                                setState(() => _isDisabled = false);
-                              }
+    return ChangeNotifierProvider<SoudPoolController>.value(
+      value: SoudPoolController()..loadSoundPool(),
+      child: Consumer<SoudPoolController>(
+        builder: (context, controller, child) {
+          return Scaffold(
+            // ボカシにしたい（ブラー？？）
+            backgroundColor: Colors.black.withOpacity(0),
+            body: Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 40, right: 30, left: 30),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextButton(
+                          onPressed: () async {
+                            final streamingId =
+                                controller.soundStreamingIdMap["wind"];
+                            if (streamingId == null) {
+                              await controller.startWindSound();
+                              return;
                             }
-                            setState(() {});
+                            await controller.stopSound(streamingId, "wind");
                           },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                    ),
-                    child: Text(
-                      '風の音',
-                      style: TextStyle(
-                        color: sound ? Colors.blue : Colors.grey,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      await soundStop();
-                    },
-                    child: Text("停止"),
-                  ),
-                  TextButton(
-                    onPressed: _isDisabled
-                        ? null
-                        : () {
-                            if (!_isDisabled) {
-                              if (!sound2) {
-                                setState(() => _isDisabled = true);
-                                soundStart2();
-                                sound2 = true;
-                                setState(() => _isDisabled = false);
-                              } else {
-                                setState(() => _isDisabled = true);
-                                soundStop2();
-                                sound2 = false;
-                                setState(() => _isDisabled = false);
-                              }
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                          ),
+                          child: Text(
+                            '風の音',
+                            style: TextStyle(
+                                //color: sound ? Colors.blue : Colors.grey,
+                                ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            final streamingId =
+                                controller.soundStreamingIdMap["insect"];
+                            if (streamingId == null) {
+                              await controller.startInsectSound();
+                              return;
                             }
-                            setState(() {});
+                            await controller.stopSound(streamingId, "insect");
                           },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                          ),
+                          child: Text(
+                            '虫の音',
+                            style: TextStyle(
+                                // color: sound2 ? Colors.blue : Colors.grey,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      '虫の音',
-                      style: TextStyle(
-                        color: sound2 ? Colors.blue : Colors.grey,
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      await soundStop2();
-                    },
-                    child: Text("停止"),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
