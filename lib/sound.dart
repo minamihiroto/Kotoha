@@ -34,41 +34,54 @@ class SoudPoolController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> getWindSoundId() async {
-    final rawData = await rootBundle.load("sound/wind.mp3");
+  Future<int> getSoundId(SoundType soundType) async {
+    final rawData = await rootBundle.load(soundType.soundFileName);
     return await pool.load(rawData);
   }
 
-  Future<void> startWindSound() async {
-    final soundId = await getWindSoundId();
-    if (soundStreamingIdMap["wind"] != null) {
+  Future<void> startSound(SoundType soundType) async {
+    final soundId = await getSoundId(soundType);
+    if (soundStreamingIdMap[soundType.str] != null) {
       return;
     }
     final soundStreamId = await pool.play(soundId, repeat: -1);
-    soundStreamingIdMap["wind"] = soundStreamId;
+    soundStreamingIdMap[soundType.str] = soundStreamId;
     updateStreamingSoundId(soundStreamId);
   }
 
-  //あとで共通化する
-  Future<int> getInsectSoundId() async {
-    var soundId = await rootBundle.load("sound/insect.mp3");
-    return await pool.load(soundId);
-  }
-
-  Future<void> startInsectSound() async {
-    final soundId = await getInsectSoundId();
-    if (soundStreamingIdMap["insect"] != null) {
-      return;
-    }
-    final soundStreamId = await pool.play(soundId, repeat: -1);
-    soundStreamingIdMap["insect"] = soundStreamId;
-    updateStreamingSoundId(soundStreamId);
-  }
-
-  Future<void> stopSound(int soundStreamId, String soundName) async {
+  Future<void> stopSound(int soundStreamId, SoundType soundType) async {
     await pool.stop(soundStreamId);
-    soundStreamingIdMap[soundName] = null;
+    soundStreamingIdMap[soundType.str] = null;
     updateStreamingSoundId(soundStreamId);
+  }
+}
+
+enum SoundType {
+  wind,
+  insect,
+}
+
+extension SoundTypeExtention on SoundType {
+  String get str {
+    switch (this) {
+      case SoundType.wind:
+        return 'sound/wind.mp3';
+      case SoundType.insect:
+        return 'sound/insect.mp3';
+      default:
+        return '';
+    }
+  }
+
+  String get soundFileName {
+    switch (this) {
+      case SoundType.wind:
+        return 'wind';
+      case SoundType.insect:
+        return 'insect';
+      default:
+        return '';
+    }
   }
 }
 
@@ -78,6 +91,15 @@ class Sound extends StatefulWidget {
 }
 
 class _SoundState extends State<Sound> {
+  bool isStreaming(BuildContext context, SoundType soundType) {
+    final controller = Provider.of<SoudPoolController>(context);
+    final streaming = controller.soundStreamingIdMap[soundType.str];
+    if (streaming == null) {
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SoudPoolController>.value(
@@ -97,13 +119,14 @@ class _SoundState extends State<Sound> {
                       children: [
                         TextButton(
                           onPressed: () async {
-                            final streamingId =
-                                controller.soundStreamingIdMap["wind"];
+                            final streamingId = controller
+                                .soundStreamingIdMap[SoundType.wind.str];
                             if (streamingId == null) {
-                              await controller.startWindSound();
+                              await controller.startSound(SoundType.wind);
                               return;
                             }
-                            await controller.stopSound(streamingId, "wind");
+                            await controller.stopSound(
+                                streamingId, SoundType.wind);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
@@ -111,19 +134,22 @@ class _SoundState extends State<Sound> {
                           child: Text(
                             '風の音',
                             style: TextStyle(
-                                //color: sound ? Colors.blue : Colors.grey,
-                                ),
+                              color: isStreaming(context, SoundType.wind)
+                                  ? Colors.blue
+                                  : Colors.grey,
+                            ),
                           ),
                         ),
                         TextButton(
                           onPressed: () async {
-                            final streamingId =
-                                controller.soundStreamingIdMap["insect"];
+                            final streamingId = controller
+                                .soundStreamingIdMap[SoundType.insect.str];
                             if (streamingId == null) {
-                              await controller.startInsectSound();
+                              await controller.startSound(SoundType.insect);
                               return;
                             }
-                            await controller.stopSound(streamingId, "insect");
+                            await controller.stopSound(
+                                streamingId, SoundType.insect);
                           },
                           style: ElevatedButton.styleFrom(
                             primary: Colors.white,
@@ -131,8 +157,10 @@ class _SoundState extends State<Sound> {
                           child: Text(
                             '虫の音',
                             style: TextStyle(
-                                // color: sound2 ? Colors.blue : Colors.grey,
-                                ),
+                              color: isStreaming(context, SoundType.insect)
+                                  ? Colors.blue
+                                  : Colors.grey,
+                            ),
                           ),
                         ),
                       ],
